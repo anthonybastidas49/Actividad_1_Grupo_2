@@ -4,73 +4,88 @@ import { useEffect, useState } from "react";
 
 const storageKey = "cartBooks";
 
-const getBookIdsInCart = () => {
-  const bookIdsInCart = localStorage.getItem(storageKey);
-  if (!bookIdsInCart) return [];
-  try {
-    const parsed = JSON.parse(bookIdsInCart);
-    if (!Array.isArray(parsed)) return [];
-    return parsed.filter((id): id is number => Number.isInteger(id));
-  } catch {
-    return [];
-  }
-};
-
 export const useCart = ({ book_id }: { book_id?: number }) => {
   const [cartBooks, setCartBooks] = useState<Array<Book>>([]);
 
-  const syncCartBooks = (bookIds: number[]) => {
-    setCartBooks(booksMock.filter((book) => bookIds.includes(book.id)));
-  };
-
   useEffect(() => {
-    const bookIds = getBookIdsInCart();
-    const timer = setTimeout(() => {
-      syncCartBooks(bookIds);
-    }, 0);
-    return () => clearTimeout(timer);
+    applyFromStorage();
+
+    function onStorage(e: StorageEvent) {
+      if (e.key === storageKey) applyFromStorage();
+    }
+    
+    window.addEventListener("storage", onStorage);
+    window.addEventListener("cart:updated", applyFromStorage);
+
+    return () => {
+      window.removeEventListener("storage", onStorage);
+      window.removeEventListener("cart:updated", applyFromStorage);
+    };
   }, []);
 
-  const toggleBookInCart = () => {
-    if (isBookInCart()) {
-      removeFromCart();
-      return;
+  const applyFromStorage = () => {
+    const ids = getBooksFromStorage();
+    syncCartBooks(ids);
+  };
+
+  const getBooksFromStorage = () => {
+    const bookIdsInCart = localStorage.getItem(storageKey);
+    if (!bookIdsInCart) return [] as number[];
+    try {
+      const parsed = JSON.parse(bookIdsInCart);
+      if (!Array.isArray(parsed)) return [] as number[];
+      return parsed.filter((id): id is number => Number.isInteger(id));
+    } catch {
+      return [] as number[];
     }
-    addToCart();
   };
 
-  const addToCart = () => {
-    if (!book_id) return;
-
-    const bookIds = getBookIdsInCart();
-    if (bookIds.includes(book_id)) {
-      syncCartBooks(bookIds);
-      return;
-    }
-
-    const nextBookIds = [...bookIds, book_id];
-    localStorage.setItem(storageKey, JSON.stringify(nextBookIds));
-    syncCartBooks(nextBookIds);
+  const syncCartBooks = (bookIds: number[]) => {
+    const mapped = bookIds
+      .map((id) => booksMock.find((b) => b.id === id))
+      .filter((b): b is Book => Boolean(b));
+    setCartBooks(mapped);
   };
 
-  const removeFromCart = () => {
-    if (!book_id) return;
-
-    const bookIds = getBookIdsInCart();
-    const nextBookIds = bookIds.filter((id) => id !== book_id);
-    localStorage.setItem(storageKey, JSON.stringify(nextBookIds));
-    syncCartBooks(nextBookIds);
+  const setBookIdsInCart = (bookIds: number[]) => {
+    localStorage.setItem(storageKey, JSON.stringify(bookIds));
+    syncCartBooks(bookIds);
+    window.dispatchEvent(new CustomEvent("cart:updated"));
   };
 
-  const isBookInCart = () => {
-    if (!book_id) return false;
-    return cartBooks.some((book) => book.id === book_id);
+  const addOneToCart = (id?: number) => {
+    const targetId = id ?? book_id;
+    if (!targetId) return;
+
+    const bookIds = getBooksFromStorage();
+    const nextBookIds = [...bookIds, targetId];
+    setBookIdsInCart(nextBookIds);
+  };
+
+  const removeOneFromCart = (id?: number) => {
+    const targetId = id ?? book_id;
+    if (!targetId) return;
+
+    const bookIds = getBooksFromStorage();
+    const index = bookIds.indexOf(targetId);
+    if (index === -1) return;
+    const nextBookIds = [...bookIds.slice(0, index), ...bookIds.slice(index + 1)];
+    setBookIdsInCart(nextBookIds);
+  };
+
+  const removeAllFromCart = (id?: number) => {
+    const targetId = id ?? book_id;
+    if (!targetId) return;
+
+    const bookIds = getBooksFromStorage();
+    const nextBookIds = bookIds.filter((i) => i !== targetId);
+    setBookIdsInCart(nextBookIds);
   };
 
   return {
-    addToCart,
-    cartBooks,
-    isBookInCart,
-    toggleBookInCart,
+    addOneToCart,
+    removeOneFromCart,
+    removeAllFromCart,
+    cartBooks
   };
 };
