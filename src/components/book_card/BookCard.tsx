@@ -1,6 +1,6 @@
 import type { Book } from "@/types/book.ts";
 import { Link } from "react-router-dom";
-import { AddToCartButton } from "./AddToCartButton";
+import { AddToCartButton } from "@/components/add_to_cart_button/AddToCartButton";
 
 interface Props {
   book: Book;

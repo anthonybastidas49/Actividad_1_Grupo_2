@@ -16,15 +16,47 @@
 }
 
 
-.book-card, .checkout-detail__section {
+.book-card, .checkout-detail__section, .payment-form__section {
   @apply bg-white rounded-lg shadow-md overflow-hidden;
   @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
 }
 
-.checkout-detail__section {
-  @apply p-6 mb-6 flex flex-col gap-4;
+.checkout-detail__section, .payment-form__section {
+  @apply p-6 mb-6 flex flex-col gap-4 w-1/2;
   @apply transition-none hover:translate-y-0 hover:shadow-md;
 }
+
+.checkout__content {
+  @apply flex;
+}
+
+.checkout-detail__content {
+  @apply flex gap-10;
+}
+
+.checkout-detail__item {
+  @apply flex flex-col justify-between;
+}
+
+.item__label, .book-item__title, .payment-form__title {
+  @apply font-semibold;
+}
+
+.payment-form__group {
+  @apply flex flex-col mb-4;
+}
+
+.payment-form__error {
+  @apply text-red-500 text-sm mt-1;
+}
+
+.item__value, .book-item__price {
+  @apply text-gray-700;
+}
+.checkout-detail__book-item {
+  @apply flex flex-col justify-between;
+}
+
 
 .book-card__image-wrapper {
   @apply relative h-48 overflow-hidden;

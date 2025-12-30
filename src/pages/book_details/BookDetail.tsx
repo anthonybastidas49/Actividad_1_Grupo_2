@@ -1,7 +1,7 @@
 import { useParams,useNavigate } from "react-router-dom";
 import { booksMock } from "@/utils/books.mock.ts";
 import type { Book } from "@/types/book.ts";
-import { AddToCartButton } from "@/components/AddToCartButton";
+import { AddToCartButton } from "@/components/add_to_cart_button/AddToCartButton";
 
 export const BookDetail = () => {
   const { id } = useParams<{ id: string }>();
