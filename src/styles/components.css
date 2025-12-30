@@ -1,0 +1,54 @@
+
+.search-bar {
+  @apply mb-8;
+}
+
+.search-bar__input {
+  @apply w-full px-5 py-3 rounded-full
+         border border-gray-300 shadow-sm
+         focus:outline-none focus:ring-2 focus:ring-indigo-500;
+}
+
+
+.book-list {
+  @apply grid gap-8;
+  @apply sm:grid-cols-2 lg:grid-cols-3;
+}
+
+
+.book-card {
+  @apply bg-white rounded-lg shadow-md overflow-hidden;
+  @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
+}
+
+.book-card__image-wrapper {
+  @apply relative h-48 overflow-hidden;
+}
+
+.book-card__image {
+  @apply w-full h-full object-cover;
+}
+
+.book-card__overlay {
+  @apply absolute inset-0 bg-black/20 opacity-0 transition;
+}
+
+.book-card:hover .book-card__overlay {
+  @apply opacity-100;
+}
+
+.book-card__content {
+  @apply p-4;
+}
+
+.book-card__title {
+  @apply text-lg font-semibold;
+}
+
+.book-card__author {
+  @apply text-sm text-gray-600;
+}
+
+.book-card__link {
+  @apply inline-block mt-3 text-blue-600 hover:underline;
+}
