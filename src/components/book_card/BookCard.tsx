@@ -1,4 +1,4 @@
-import type { Book } from "@/types/book";
+import type { Book } from "@/types/book.ts";
 import { Link } from "react-router-dom";
 
 interface Props {

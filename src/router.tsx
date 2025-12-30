@@ -1,13 +1,16 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "@/pages/Home";
-import {BookDetail} from "@/pages/BookDetail";
+import Home from "@/pages/home/Home.tsx";
+import {BookDetail} from "@/pages/book_details/BookDetail.tsx";
+import {Layout} from "@/layouts/Layout.tsx";
+import {Landing} from "@/pages/landing/Landing.tsx";
 
 export const GlobalRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/books/:id" element={<BookDetail />} />
+        <Route path="/" element={<Landing/>}/>
+        <Route path="/home" element={<Layout><Home /></Layout>}/>
+        <Route path="/books/:id" element={<Layout><BookDetail /></Layout>} />
       </Routes>
     </BrowserRouter>
   );

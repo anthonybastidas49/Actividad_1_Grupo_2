@@ -1,5 +1,5 @@
-import type { Book } from "@/types/book";
-import { BookCard } from "./BookCard";
+import type { Book } from "@/types/book.ts";
+import { BookCard } from "../book_card/BookCard.tsx";
 
 interface Props {
   books: Book[];
