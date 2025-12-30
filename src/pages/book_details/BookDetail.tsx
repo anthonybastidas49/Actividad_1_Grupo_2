@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import { booksMock } from "@/utils/books.mock.ts";
 import type { Book } from "@/types/book.ts";
 
@@ -7,23 +7,31 @@ export const BookDetail = () => {
 
   const book: Book | undefined = booksMock.find((b) => b.id === Number(id));
 
+  const navigate = useNavigate();
+
   if (!book) {
     return (
       <main className="book-detail">
         <p className="book-detail__not-found">Libro no encontrado</p>
 
-        <Link to="/" className="book-detail__back book-detail__back--center">
-          Volver al catálogo
-        </Link>
+          <button
+              onClick={() => navigate(-1)}
+              className="book-detail__back book-detail__back--center"
+          >
+              ← Volver
+          </button>
       </main>
     );
   }
 
   return (
     <main className="book-detail">
-      <Link to="/" className="book-detail__back">
-        ← Volver
-      </Link>
+        <button
+            onClick={() => navigate(-1)}
+            className="book-detail__back book-detail__back--center"
+        >
+            ← Volver
+        </button>
 
       <section className="book-detail__card">
         <img src={book.image} alt={book.title} className="book-detail__image" />
