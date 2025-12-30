@@ -1,9 +1,8 @@
-import {createContext} from "react";
+import  {createContext, type JSX} from "react";
 
-// @ts-ignore // TODO remove this ts-ignore when context is typed
-export const LibraryContext = createContext();
+const LibraryContext = createContext({});
 
-export const LibraryProvider = ({children}:{children: any}) => {
+export const LibraryProvider = ({children}:{children: JSX.Element}) => {
     return (
         <LibraryContext.Provider value={{}}>
             {children}

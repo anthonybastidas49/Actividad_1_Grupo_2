@@ -1,5 +1,6 @@
 import type { Book } from "@/types/book.ts";
 import { Link } from "react-router-dom";
+import { AddToCartButton } from "@/components/add_to_cart_button/AddToCartButton";
 
 interface Props {
   book: Book;
@@ -18,12 +19,16 @@ export const BookCard = ({ book }: Props) => {
       </div>
 
       <div className="book-card__content">
-        <h3 className="book-card__title">{book.title}</h3>
+        <h2 className="book-card__title">{book.title}</h2>
         <p className="book-card__author">{book.author}</p>
+        <p className="book-card__price">${book.price.toFixed(2)}</p>
 
-        <Link to={`/books/${book.id}`} className="book-card__link">
-          Ver detalle
-        </Link>
+        <div className="book-card__actions">
+          <Link to={`/books/${book.id}`} className="book-card__link">
+            Ver detalle
+          </Link>
+          <AddToCartButton book_id={book.id}/>
+        </div>
       </div>
     </article>
   );

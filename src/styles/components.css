@@ -16,10 +16,47 @@
 }
 
 
-.book-card {
+.book-card, .checkout-detail__section, .payment-form__section {
   @apply bg-white rounded-lg shadow-md overflow-hidden;
   @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
 }
+
+.checkout-detail__section, .payment-form__section {
+  @apply p-6 mb-6 flex flex-col gap-4 w-1/2;
+  @apply transition-none hover:translate-y-0 hover:shadow-md;
+}
+
+.checkout__content {
+  @apply flex;
+}
+
+.checkout-detail__content {
+  @apply flex gap-10;
+}
+
+.checkout-detail__item {
+  @apply flex flex-col justify-between;
+}
+
+.item__label, .book-item__title, .payment-form__title {
+  @apply font-semibold;
+}
+
+.payment-form__group {
+  @apply flex flex-col mb-4;
+}
+
+.payment-form__error {
+  @apply text-red-500 text-sm mt-1;
+}
+
+.item__value, .book-item__price {
+  @apply text-gray-700;
+}
+.checkout-detail__book-item {
+  @apply flex flex-col justify-between;
+}
+
 
 .book-card__image-wrapper {
   @apply relative h-48 overflow-hidden;
@@ -41,7 +78,7 @@
   @apply p-4;
 }
 
-.book-card__title {
+.book-card__title, .checkout-detail__title {
   @apply text-lg font-semibold;
 }
 
@@ -51,4 +88,24 @@
 
 .book-card__link {
   @apply inline-block mt-3 text-blue-600 hover:underline;
+}
+
+.book-card__price {
+  @apply text-sm font-light text-gray-500 mb-2;
+}
+
+.book-card__actions {
+  @apply flex justify-between
+}
+
+.add-to-cart__button {
+  @apply bg-blue-600 w-10 text-white p-2 rounded-full hover:bg-blue-700 hover:shadow-lg transition duration-750 hover:cursor-pointer;
+}
+
+.toasts {
+  @apply fixed top-4 right-4 z-50 flex flex-col gap-2;
+}
+
+.toast {
+  @apply min-w-[240px] max-w-[360px] rounded-md shadow-lg px-6 py-3 text-xl;
 }
