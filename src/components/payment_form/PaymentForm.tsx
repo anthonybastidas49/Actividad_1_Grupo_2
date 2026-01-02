@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ToastsViewport } from "../toasts_viewport/ToastsViewport";
 import { useToast } from "@/hooks/useToast";
 import { useNavigate } from "react-router-dom";
+const storageKey = "cartBooks";
 
 export const PaymentForm = () => {
   const navigate = useNavigate();
@@ -82,7 +83,7 @@ export const PaymentForm = () => {
     }
 
     showToast("Pago realizado con éxito", { type: "success", duration: 3000 });
-
+    localStorage.removeItem(storageKey);
     setFormData({
       cardNumber: { value: "", errorMessage: "" },
       cardHolder: { value: "", errorMessage: "" },
@@ -92,7 +93,7 @@ export const PaymentForm = () => {
 
     setTimeout(() => {
       navigate("/home");
-    }, 3000);
+    }, 1000);
   };
   return (
     <section className="payment-form__section">
