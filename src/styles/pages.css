@@ -38,13 +38,8 @@
   @apply focus:outline-none focus:ring-2 focus:ring-blue-500;
 }
 
-
 .book-detail {
   @apply container mx-auto px-4 py-8;
-}
-
-.book-detail__back {
-  @apply text-blue-600 hover:underline mb-6 inline-block;
 }
 
 .book-detail__card {
@@ -81,9 +76,6 @@
   @apply text-sm font-light text-gray-500 mb-4;
 }
 
-.book-detail__back--center {
-  @apply block text-center mt-4;
-}
 .home__footer {
   @apply mt-16 text-center text-sm text-gray-400;
 }
