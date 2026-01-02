@@ -110,16 +110,21 @@ export const PaymentForm = () => {
           </label>
           <input
             type="text"
+            inputMode="numeric"
+            autoComplete="cc-number"
             id="cardNumber"
             name="cardNumber"
             className="payment-form__input"
             value={formData.cardNumber.value}
-            onChange={(e) =>
+            onChange={(e) => {
+              const onlyDigits = e.target.value.replace(/\D/g, "").slice(0, 16);
               setFormData({
                 ...formData,
-                cardNumber: { ...formData.cardNumber, value: e.target.value },
-              })
-            }
+                cardNumber: { ...formData.cardNumber, value: onlyDigits },
+              });
+            }}
+            pattern="^\d{16}$"
+            title="Ingresa 16 dígitos"
             required
           />
           {formData.cardNumber.errorMessage && (
@@ -135,6 +140,7 @@ export const PaymentForm = () => {
           </label>
           <input
             type="text"
+            autoComplete="cc-name"
             id="cardHolder"
             name="cardHolder"
             className="payment-form__input"
@@ -145,6 +151,8 @@ export const PaymentForm = () => {
                 cardHolder: { ...formData.cardHolder, value: e.target.value },
               })
             }
+            pattern="^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ ]{3,}$"
+            title="Ingresa el nombre (mínimo 3 letras)"
             required
           />
           {formData.cardHolder.errorMessage && (
@@ -160,20 +168,29 @@ export const PaymentForm = () => {
           </label>
           <input
             type="text"
+            inputMode="numeric"
+            autoComplete="cc-exp"
             id="expirationDate"
             name="expirationDate"
             className="payment-form__input"
             placeholder="MM/AA"
             value={formData.expirationDate.value}
-            onChange={(e) =>
+            onChange={(e) => {
+              const digits = e.target.value.replace(/\D/g, "").slice(0, 4); // MMYY
+              const formatted =
+                digits.length <= 2
+                  ? digits
+                  : `${digits.slice(0, 2)}/${digits.slice(2)}`;
               setFormData({
                 ...formData,
                 expirationDate: {
                   ...formData.expirationDate,
-                  value: e.target.value,
+                  value: formatted,
                 },
-              })
-            }
+              });
+            }}
+            pattern="^(0[1-9]|1[0-2])\/\d{2}$"
+            title="Formato MM/AA (ej: 09/28)"
             required
           />
           {formData.expirationDate.errorMessage && (
@@ -189,16 +206,21 @@ export const PaymentForm = () => {
           </label>
           <input
             type="text"
+            inputMode="numeric"
+            autoComplete="cc-csc"
             id="cvv"
             name="cvv"
             className="payment-form__input"
             value={formData.cvv.value}
-            onChange={(e) =>
+            onChange={(e) => {
+              const onlyDigits = e.target.value.replace(/\D/g, "").slice(0, 4);
               setFormData({
                 ...formData,
-                cvv: { ...formData.cvv, value: e.target.value },
-              })
-            }
+                cvv: { ...formData.cvv, value: onlyDigits },
+              });
+            }}
+            pattern="^\d{3,4}$"
+            title="CVV de 3 o 4 dígitos"
             required
           />
           {formData.cvv.errorMessage && (

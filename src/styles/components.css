@@ -27,7 +27,7 @@
 }
 
 .checkout__content {
-  @apply flex;
+  @apply flex flex-col md:flex-row gap-8;
 }
 
 .checkout-detail__content {
