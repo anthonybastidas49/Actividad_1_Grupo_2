@@ -2,6 +2,7 @@ import { useState } from "react";
 import { booksMock } from "@/utils/books.mock.ts";
 import { BookList } from "@/components/book_list/BookList.tsx";
 import { SearchBar } from "@/components/search_bar/SearchBar.tsx";
+import { Cart } from "@/components/cart/Cart";
 
 export const Home = () => {
   const [search, setSearch] = useState("");
@@ -16,6 +17,7 @@ export const Home = () => {
         <SearchBar value={search} onChange={setSearch} />
         <BookList books={filteredBooks} />
       </main>
+      <Cart />
     </>
   );
 };

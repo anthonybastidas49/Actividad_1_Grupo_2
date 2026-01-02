@@ -10,15 +10,23 @@ export const CheckoutDetail = ({ books }: CheckoutDetailProps) => {
     books,
   });
 
+  const grouped = books.reduce((acc, book) => {
+    if (!acc[book.id]) acc[book.id] = { book, qty: 0 } as { book: Book; qty: number };
+    acc[book.id].qty += 1;
+    return acc;
+  }, {} as Record<number, { book: Book; qty: number }>);
+
+  const items = Object.values(grouped);
+
   return (
     <section className="checkout-detail__section">
       <h2 className="checkout-detail__title">Detalle de facturación</h2>
       <div className="checkout-detail__content">
         <div className="checkout-detail__container">
-          {books.map((book) => (
+          {items.map(({ book, qty }) => (
             <div key={book.id} className="checkout-detail__book-item">
-              <span className="book-item__title">{book.title}</span>
-              <span className="book-item__price">${book.price.toFixed(2)}</span>
+              <span className="book-item__title">{book.title} x {qty}</span>
+              <span className="book-item__price">${(book.price * qty).toFixed(2)}</span>
             </div>
           ))}
         </div>
